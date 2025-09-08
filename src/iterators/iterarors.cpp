@@ -1,20 +1,31 @@
 #include "iterators/iterators.hpp"
 
-bool Iter::operator==(const Iter& other) const {
+template <typename Derived>
+bool Iter<Derived>::operator==(const Iter& other) const {
     return _current == other._current;
 }
 
-bool Iter::operator!=(const Iter& other) const {
+template <typename Derived>
+bool Iter<Derived>::operator!=(const Iter& other) const {
     return !(*this == other);
 }
 
-Node& Iter::operator*() const {
+template <typename Derived>
+Node& Iter<Derived>::operator*() const {
     return *_current;
 }
 
-DFSIter& DFSIter::operator++() {
+template <typename Derived>
+Derived& Iter<Derived>::operator++() {
     next(false);
     return *this;
+}
+
+template <typename Derived>
+Derived Iter<Derived>::operator++(int) {
+    Derived temp = *this;
+    next(false);
+    return temp;
 }
 
 bool DFSIter::next(bool skip_dirs) {
@@ -35,16 +46,6 @@ bool DFSIter::next(bool skip_dirs) {
     }
     _current = nullptr;
     return false;
-}
-
-FilesIter& FilesIter::operator++() {
-    next(true);
-    return *this;
-}
-
-BFSIter& BFSIter::operator++() {
-    next(true);
-    return *this;
 }
 
 bool BFSIter::next(bool) {

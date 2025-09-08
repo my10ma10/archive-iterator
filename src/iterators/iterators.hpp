@@ -6,6 +6,7 @@
 
 #include "nodes/nodes.hpp"
 
+template <typename Derived> 
 class Iter {
     using iterator_category = std::forward_iterator_tag;
 protected:
@@ -21,10 +22,13 @@ public:
     Node& operator*() const;
 
     virtual bool next(bool) = 0;
+
+    Derived& operator++();
+    Derived operator++(int);
 };
 
 
-class DFSIter : public Iter {
+class DFSIter : public Iter<DFSIter> {
 protected:
     bool next(bool skip_dirs) override;
 public:
@@ -34,16 +38,14 @@ public:
             next(skip_dirs);
         }
     }
-    DFSIter& operator++();
 };
 
 class FilesIter : public DFSIter {
 public:
     FilesIter(std::shared_ptr<Dir> node) : DFSIter(node, true) {}
-    FilesIter& operator++();
 };
 
-class BFSIter : public Iter {
+class BFSIter : public Iter<DFSIter> {
 protected:
     bool next(bool) override;
 public:
@@ -53,5 +55,4 @@ public:
             next(skip_dirs);
         }
     }
-    BFSIter& operator++();
 };
