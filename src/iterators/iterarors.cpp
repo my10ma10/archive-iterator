@@ -41,3 +41,24 @@ FilesIter& FilesIter::operator++() {
     next(true);
     return *this;
 }
+
+BFSIter& BFSIter::operator++() {
+    next(true);
+    return *this;
+}
+
+bool BFSIter::next(bool) {
+    while (!_deque.empty()) {
+        _current = _deque.back();
+        _deque.pop_back();
+
+        if (std::shared_ptr<Dir> root = std::dynamic_pointer_cast<Dir>(_current)) {
+            for (auto it = root->_children.begin(); it != root->_children.end(); ++it) {
+                _deque.push_front(*it);
+            }
+        }
+        return true;
+    }
+    _current = nullptr;
+    return false;
+}

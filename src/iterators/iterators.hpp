@@ -7,6 +7,7 @@
 #include "nodes/nodes.hpp"
 
 class Iter {
+    using iterator_category = std::forward_iterator_tag;
 protected:
     std::shared_ptr<Node> _current = nullptr;
     /// @brief Nodes which is need to visit
@@ -40,4 +41,17 @@ class FilesIter : public DFSIter {
 public:
     FilesIter(std::shared_ptr<Dir> node) : DFSIter(node, true) {}
     FilesIter& operator++();
+};
+
+class BFSIter : public Iter {
+protected:
+    bool next(bool) override;
+public:
+    BFSIter(std::shared_ptr<Node> root, bool skip_dirs = false) : Iter(nullptr) {
+        if (root) {
+            _deque.push_front(root);
+            next(skip_dirs);
+        }
+    }
+    BFSIter& operator++();
 };

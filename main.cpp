@@ -1,5 +1,7 @@
 #include "archive/archive.hpp"
 
+#include <ranges>
+
 int main() {
     try {
         auto img = std::make_shared<Dir>("img");
@@ -19,9 +21,8 @@ int main() {
 
         Archive arch(root);
 
-        for (const auto& node : arch.files()) {
-            std::cout << node.getName() << std::endl;
-        }
+        // auto dfsR = arch.dfs();
+        // auto it = std::ranges::begin(dfsR);
     }
     catch (std::exception& ex) {
         std::cout << ex.what() << std::endl;

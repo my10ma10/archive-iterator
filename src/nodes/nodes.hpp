@@ -25,6 +25,7 @@ public:
 class Dir : public Node {
     friend class DFSIter;
     friend class FilesIter;
+    friend class BFSIter;
 protected:
     std::vector<std::shared_ptr<Node> > _children;
 public:

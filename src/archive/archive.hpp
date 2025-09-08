@@ -11,6 +11,7 @@ public:
     Archive(std::shared_ptr<Dir> root) : _root(root) {}
     DFSRange dfs() const;
     FilesRange files() const;
+    BFSRange bfs() const;
 };
 
 

@@ -15,18 +15,24 @@ public:
     It begin() const;
     It end();
     It end() const;
+    
+    using value_type = Node;
 };
 
 class DFSRange : public Range<DFSIter> {
 public:
-    DFSRange(std::shared_ptr<Node> root) 
-    : Range<DFSIter>(root) {}
+    DFSRange(std::shared_ptr<Node> root) : Range<DFSIter>(root) {}
 };
 
 class FilesRange : public Range<FilesIter> {
 public:
-    FilesRange(std::shared_ptr<Node> root) 
-    : Range<FilesIter>(root) {}
+    FilesRange(std::shared_ptr<Node> root) : Range<FilesIter>(root) {}
+    using value_type = File;
+};
+
+class BFSRange : public Range<BFSIter> {
+public: 
+    BFSRange(std::shared_ptr<Node> root) : Range<BFSIter>(root) {}
 };
 
 template <typename It>
